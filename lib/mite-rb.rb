@@ -7,14 +7,12 @@ require 'active_resource'
 module Mite
   
   class << self
-    attr_accessor :email, :password, :host_format, :domain_format, :protocol, :port, :user_agent
+    attr_accessor :email, :password, :domain_format, :protocol, :port, :user_agent
     attr_reader :account, :key
 
     # Sets the account name, and updates all resources with the new domain.
     def account=(name)
-      resources.each do |klass|
-        klass.site = klass.site_format % (host_format % [protocol, domain_format % name, ":#{port}"])
-      end
+      Mite::Base.site = "#{protocol}://#{domain_format % name}#{port.blank? ? '' : ":#{port}"}"
       @account = name
     end
 
@@ -66,7 +64,6 @@ module Mite
     end
   end
   
-  self.host_format   = '%s://%s%s'
   self.domain_format = '%s.mite.yo.lk'
   self.protocol      = 'https'
   self.port          = ''
@@ -110,11 +107,7 @@ module Mite
       def inherited(base)
         unless base == Mite::SingletonBase
           Mite.resources << base
-          class << base
-            attr_accessor :site_format
-          end
           base.headers['User-Agent'] = Mite.user_agent
-          base.site_format = '%s'
           base.timeout = 20
         end
         super
