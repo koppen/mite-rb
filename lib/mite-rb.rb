@@ -102,6 +102,9 @@ module Mite
   end
   
   class Base < ActiveResource::Base
+    self.format = :json
+    self.include_root_in_json = true
+    
     class << self
       
       def inherited(base)
