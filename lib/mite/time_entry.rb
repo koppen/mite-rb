@@ -1,3 +1,4 @@
+require 'mite-rb'
 class Mite::TimeEntry < Mite::Base
   
   def service
@@ -37,8 +38,8 @@ class Mite::TimeEntry < Mite::Base
     Mite::Tracker.stop if tracking?
   end
   
-  def load(attr)
-    super(attr)
+  def load(attr, remove_root = false)
+    super(attr, remove_root)
     if attributes["tracking"]
       attributes["tracker"] = Mite::Tracker.new.load(attributes.delete("tracking").attributes)
     end
