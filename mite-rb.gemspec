@@ -20,5 +20,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency(%q<activeresource>, [">= 2.3.14"])
+  s.add_development_dependency("rspec-core")
+  s.add_development_dependency("rspec-mocks")
+  s.add_development_dependency("rspec-expectations")
 end
 
