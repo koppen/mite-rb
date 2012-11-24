@@ -2,6 +2,21 @@ require 'spec_helper'
 require 'mite-rb'
 
 describe Mite do
+  describe ".authenticate" do
+    it "stores username" do
+      Mite.authenticate('rick@techno-weenie.net', 'spacemonkey')
+      Mite.instance_variable_get(:@user).should == 'rick@techno-weenie.net'
+    end
+
+    it "stores password" do
+      Mite.authenticate('rick@techno-weenie.net', 'spacemonkey')
+      Mite.password.should == 'spacemonkey'
+    end
+
+    it "returns true" do
+      Mite.authenticate('rick@techno-weenie.net', 'spacemonkey').should be_true
+    end
+  end
 
   describe "validate" do
     context "when connection is valid" do
