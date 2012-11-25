@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Mite::Project do
+  it_behaves_like "resource with active and archived"
+
   describe ".all" do
     let(:response) { {:projects => [
       :project => {:id => 42}
@@ -20,23 +22,6 @@ describe Mite::Project do
     it "finds projects whose name containing 'web'" do
       api_stub(:get, "projects.json?name=web", response)
       projects = Mite::Project.all(:params => {:name => 'web'})
-    end
-  end
-
-  describe ".archived" do
-    let(:response) { {:projects => [
-      :project => {:id => 42}
-    ]}.to_json }
-
-    it "finds archived projects from the API" do
-      api_stub(:get, "projects/archived.json", response)
-      projects = Mite::Project.archived
-    end
-
-    it "returns array of projects" do
-      api_stub(:get, "projects/archived.json", response)
-      projects = Mite::Project.archived
-      projects.first.should be_a(Mite::Project)
     end
   end
 
