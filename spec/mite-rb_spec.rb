@@ -3,6 +3,11 @@ require 'mite-rb'
 
 describe Mite do
   describe ".authenticate" do
+    after(:each) do
+      # Reset authentication details to prevent them from spilling into other tests
+      Mite.authenticate(nil, nil)
+    end
+
     it "stores username" do
       Mite.authenticate('rick@techno-weenie.net', 'spacemonkey')
       Mite.instance_variable_get(:@user).should == 'rick@techno-weenie.net'
