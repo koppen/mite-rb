@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Mite::Project do
-  before :all do
-    Mite.account = 'test'
-  end
-
   describe ".all" do
     let(:response) { {:projects => [
       :project => {:id => 42}
